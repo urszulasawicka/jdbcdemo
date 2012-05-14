@@ -50,7 +50,7 @@ public class ArchiveManager {
 			deleteAllArchivesStmt = connection
 					.prepareStatement("DELETE FROM Archive");
 			updateArchiveStmt = connection
-					.prepareStatement("UPDATE archive SET teamNumber = ? WHERE id = ?");
+					.prepareStatement("UPDATE archive SET teamNumber = ?, phone = ? WHERE name = ?");
 			deleteArchiveStmt = connection
 					.prepareStatement("DELETE FROM Archive WHERE name = ?");
 		} catch (SQLException e) {
@@ -138,26 +138,16 @@ public class ArchiveManager {
 	public int updateArchive(Archive archive) {
 		int count = 0;
 		try {
-			// System.out.println(archive.getName() + archive.getTeamNumber() +
-			// archive.getPhone());
 			ResultSet rs = getAllArchivesStmt.executeQuery();
 			while (rs.next()) {
-				if((rs.getString("name")).equals(archive.getName())){
-					archive.setId(rs.getInt("id"));
+				if(rs.getString(2).equals(archive.getName())){
+					updateArchiveStmt.setInt(1, archive.getTeamNumber());
+					updateArchiveStmt.setString(2, archive.getPhone());
+					updateArchiveStmt.setString(3, archive.getName());
+					count = updateArchiveStmt.executeUpdate();
+					System.out.println(updateArchiveStmt);
 				}
 			}
-			/*List<Archive> archives1 = this.getAllArchives();
-			for(int i = 1; i < archives1.size(); i++ ){
-				Archive a = archives1.get(i);
-				if((archive.getName()).equals(a.getName())){
-					System.out.println(archive.getName());
-					archive.setId(a.getId());
-				}
-			}*/
-			updateArchiveStmt.setInt(1, archive.getTeamNumber());
-			updateArchiveStmt.setInt(2, (int) archive.getId());
-			System.out.println(updateArchiveStmt);
-			count = updateArchiveStmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -168,11 +158,14 @@ public class ArchiveManager {
 	public int deleteArchive(Archive archive) {
 		int count = 0;
 		try {
-			// System.out.println(archive.getName() + archive.getTeamNumber() +
-			// archive.getPhone());
-			deleteArchiveStmt.setString(1, archive.getName());
-			System.out.println(deleteArchiveStmt);
-			count = deleteArchiveStmt.executeUpdate();
+			ResultSet rs = getAllArchivesStmt.executeQuery();
+			while (rs.next()) {
+				if(rs.getString(2).equals(archive.getName())){
+					deleteArchiveStmt.setString(1, archive.getName());
+					System.out.println(deleteArchiveStmt);
+					count = deleteArchiveStmt.executeUpdate();
+				}
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

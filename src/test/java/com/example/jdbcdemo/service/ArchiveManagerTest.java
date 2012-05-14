@@ -41,9 +41,8 @@ public class ArchiveManagerTest {
 	@Test
 	public void checkReading(){
 		List<Archive> archives = archiveManager.getAllArchives();
-		archiveManager.clearArchives();
 		assertEquals(1, archives.size());
-		
+		archiveManager.clearArchives();
 		Archive archiveRetrieved = archives.get(0);
 		
 		assertEquals(NAME1, archiveRetrieved.getName());
@@ -53,32 +52,34 @@ public class ArchiveManagerTest {
 	
 	@Test
 	public void checkUpdating(){
+		Archive archive = new Archive(NAME1, TEAMNUMBER1, PHONE1);
+		archiveManager.clearArchives();
+		
+		assertEquals(1, archiveManager.addArchive(archive));
 		
 		Archive archive1 = new Archive(NAME1, TEAMNUMBER2, PHONE2);
+		assertEquals(1, archiveManager.updateArchive(archive1));
 		archiveManager.clearArchives();
 		List<Archive> archives1 = archiveManager.getAllArchives();
-		/*for(int i = 0; i < archives1.size(); i++ ){
-			Archive a = archives1.get(i);
-			System.out.println(a.getId());
-			if(NAME1.equals(a.getName())){
-				archive1.setId(a.getId());
-			}
-		}*/
-		assertEquals(1, archiveManager.updateArchive(archive1));
 		
 		Archive archiveRetrieved1 = archives1.get(0);
 		
 		assertEquals(NAME1, archiveRetrieved1.getName());
-		assertEquals(TEAMNUMBER1, archiveRetrieved1.getTeamNumber());
+		assertEquals(TEAMNUMBER2, archiveRetrieved1.getTeamNumber());
 		assertEquals(PHONE2, archiveRetrieved1.getPhone());
 	}
 	
 	@Test
 	public void checkDeleting(){
 		Archive archive = new Archive(NAME1, TEAMNUMBER1, PHONE1);
+		archiveManager.clearArchives();
+		
+		assertEquals(1, archiveManager.addArchive(archive));
+		
+		Archive archive1 = new Archive(NAME1, TEAMNUMBER2, PHONE2);
 		
 		archiveManager.clearArchives();
-		assertEquals(1, archiveManager.deleteArchive(archive));
+		assertEquals(1, archiveManager.deleteArchive(archive1));
 		
 		List<Archive> archives = archiveManager.getAllArchives();
 		
