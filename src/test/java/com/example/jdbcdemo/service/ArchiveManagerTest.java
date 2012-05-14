@@ -11,12 +11,17 @@ import com.example.jdbcdemo.domain.Archive;
 public class ArchiveManagerTest {
 	ArchiveManager archiveManager = new ArchiveManager();
 	
-	private final static String NAME1 = "Centrum";
-	private final static int ID = 1;
-	private final static int TEAMNUMBER1 = 189;
-	private final static int TEAMNUMBER2 = 178;
-	private final static String PHONE1 = "(52) 339-54-01";
-	private final static String PHONE2 = "(78) 888-99-45";
+	private final static String NAME_1 = "Centrum";
+	private final static int TEAMNUMBER_1 = 189;
+	private final static String PHONE_1 = "(52) 339-54-01";
+	
+	private final static String NAME_2 = "Oddział";
+	private final static int TEAMNUMBER_2 = 178;
+	private final static String PHONE_2 = "(78) 888-99-45";
+	
+	private final static String NAME_3 = "Filia";
+	private final static int TEAMNUMBER_3 = 159;
+	private final static String PHONE_3 = "(78) 123-45-12";
 	
 	@Test
 	public void checkConnection(){
@@ -25,65 +30,80 @@ public class ArchiveManagerTest {
 	
 	@Test
 	public void checkAdding(){
-		Archive archive = new Archive(NAME1, TEAMNUMBER1, PHONE1);
-		
+		Archive archive1 = new Archive(NAME_1, TEAMNUMBER_1, PHONE_1);
+		Archive archive2 = new Archive(NAME_2, TEAMNUMBER_2, PHONE_2);
 		archiveManager.clearArchives();
-		assertEquals(1, archiveManager.addArchive(archive));
+		assertEquals(1, archiveManager.addArchive(archive1));
+		assertEquals(1, archiveManager.addArchive(archive2));
 		
 		List<Archive> archives = archiveManager.getAllArchives();
-		Archive archiveRetrieved = archives.get(0);
+		Archive archiveRetrieved1 = archives.get(0);
+		Archive archiveRetrieved2 = archives.get(1);
 		
-		assertEquals(NAME1, archiveRetrieved.getName());
-		assertEquals(TEAMNUMBER1, archiveRetrieved.getTeamNumber());
-		assertEquals(PHONE1, archiveRetrieved.getPhone());
+		assertEquals(NAME_1, archiveRetrieved1.getName());
+		assertEquals(TEAMNUMBER_1, archiveRetrieved1.getTeamNumber());
+		assertEquals(PHONE_1, archiveRetrieved1.getPhone());
+		
+		assertEquals(NAME_2, archiveRetrieved2.getName());
+		assertEquals(TEAMNUMBER_2, archiveRetrieved2.getTeamNumber());
+		assertEquals(PHONE_2, archiveRetrieved2.getPhone());
 	}
 	
 	@Test
 	public void checkReading(){
-		List<Archive> archives = archiveManager.getAllArchives();
-		assertEquals(1, archives.size());
+		Archive archive1 = new Archive(NAME_1, TEAMNUMBER_1, PHONE_1);
+		Archive archive2 = new Archive(NAME_2, TEAMNUMBER_2, PHONE_2);
 		archiveManager.clearArchives();
-		Archive archiveRetrieved = archives.get(0);
+		assertEquals(1, archiveManager.addArchive(archive1));
+		assertEquals(1, archiveManager.addArchive(archive2));
 		
-		assertEquals(NAME1, archiveRetrieved.getName());
-		assertEquals(TEAMNUMBER1, archiveRetrieved.getTeamNumber());
-		assertEquals(PHONE1, archiveRetrieved.getPhone());
+		List<Archive> archives = archiveManager.getAllArchives();
+		assertEquals(2, archives.size());
+		
+		Archive archiveRetrieved1 = archives.get(0);
+		Archive archiveRetrieved2 = archives.get(1);
+		
+		assertEquals(NAME_1, archiveRetrieved1.getName());
+		assertEquals(TEAMNUMBER_1, archiveRetrieved1.getTeamNumber());
+		assertEquals(PHONE_1, archiveRetrieved1.getPhone());
+		
+		assertEquals(NAME_2, archiveRetrieved2.getName());
+		assertEquals(TEAMNUMBER_2, archiveRetrieved2.getTeamNumber());
+		assertEquals(PHONE_2, archiveRetrieved2.getPhone());
 	}
-	
+
 	@Test
 	public void checkUpdating(){
-		Archive archive = new Archive(NAME1, TEAMNUMBER1, PHONE1);
+		Archive archive1 = new Archive(NAME_1, TEAMNUMBER_1, PHONE_1);
+		Archive archive2 = new Archive(NAME_2, TEAMNUMBER_2, PHONE_2);
 		archiveManager.clearArchives();
+		assertEquals(1, archiveManager.addArchive(archive1));
+		assertEquals(1, archiveManager.addArchive(archive2));
 		
-		assertEquals(1, archiveManager.addArchive(archive));
+		Archive archive3 = new Archive(NAME_2, TEAMNUMBER_3, PHONE_3);
+		assertEquals(1, archiveManager.updateArchive(archive3));
+		List<Archive> archives = archiveManager.getAllArchives();
 		
-		Archive archive1 = new Archive(NAME1, TEAMNUMBER2, PHONE2);
-		assertEquals(1, archiveManager.updateArchive(archive1));
-		archiveManager.clearArchives();
-		List<Archive> archives1 = archiveManager.getAllArchives();
+		Archive archiveRetrieved = archives.get(1);
 		
-		Archive archiveRetrieved1 = archives1.get(0);
-		
-		assertEquals(NAME1, archiveRetrieved1.getName());
-		assertEquals(TEAMNUMBER2, archiveRetrieved1.getTeamNumber());
-		assertEquals(PHONE2, archiveRetrieved1.getPhone());
+		assertEquals(NAME_2, archiveRetrieved.getName());
+		assertEquals(TEAMNUMBER_3, archiveRetrieved.getTeamNumber());
+		assertEquals(PHONE_3, archiveRetrieved.getPhone());
 	}
-	
+
 	@Test
 	public void checkDeleting(){
-		Archive archive = new Archive(NAME1, TEAMNUMBER1, PHONE1);
+		Archive archive1 = new Archive(NAME_1, TEAMNUMBER_1, PHONE_1);
+		Archive archive2 = new Archive(NAME_2, TEAMNUMBER_2, PHONE_2);
 		archiveManager.clearArchives();
+		assertEquals(1, archiveManager.addArchive(archive1));
+		assertEquals(1, archiveManager.addArchive(archive2));
 		
-		assertEquals(1, archiveManager.addArchive(archive));
-		
-		Archive archive1 = new Archive(NAME1, TEAMNUMBER2, PHONE2);
-		
-		archiveManager.clearArchives();
 		assertEquals(1, archiveManager.deleteArchive(archive1));
 		
 		List<Archive> archives = archiveManager.getAllArchives();
 		
-		assertEquals(0, archives.size());
+		assertEquals(1, archives.size());
 	}
 
 }
