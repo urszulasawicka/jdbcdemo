@@ -105,6 +105,11 @@ public class ResourceManager {
 			ResultSet rs = getAllResourcesStmt.executeQuery();
 			while (rs.next()){
 				Resource r = new Resource();
+				r.setId(rs.getInt("id"));
+				r.setName(rs.getString("name"));
+				r.setAuthor(rs.getString("author"));
+				r.setDate(rs.getInt("date"));
+				resources.add(r);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

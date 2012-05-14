@@ -50,7 +50,7 @@ public class ArchiveManager {
 			deleteAllArchivesStmt = connection
 					.prepareStatement("DELETE FROM Archive");
 			updateArchiveStmt = connection
-					.prepareStatement("UPDATE archive SET teamNumber = ? WHERE name = ?");
+					.prepareStatement("UPDATE archive SET teamNumber = ? WHERE id = ?");
 			deleteArchiveStmt = connection
 					.prepareStatement("DELETE FROM Archive WHERE name = ?");
 		} catch (SQLException e) {
@@ -140,8 +140,16 @@ public class ArchiveManager {
 		try {
 			// System.out.println(archive.getName() + archive.getTeamNumber() +
 			// archive.getPhone());
+			List<Archive> archives1 = this.getAllArchives();
+			for(int i = 0; i < archives1.size(); i++ ){
+				Archive a = archives1.get(i);
+				if(archive.equals(a.getName())){
+					System.out.println(archive.getName());
+					archive.setId(a.getId());
+				}
+			}
 			updateArchiveStmt.setInt(1, archive.getTeamNumber());
-			updateArchiveStmt.setString(2, archive.getName());
+			updateArchiveStmt.setLong(2, archive.getId());
 			System.out.println(updateArchiveStmt);
 			count = updateArchiveStmt.executeUpdate();
 		} catch (SQLException e) {

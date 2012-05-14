@@ -27,5 +27,10 @@ public class ResourceManagerTest {
 		assertEquals(1, resourceManager.addResource(resource));
 		
 		List<Resource> resources = resourceManager.getAllResources();
+		Resource resourceRetrieved = resources.get(0);
+		
+		assertEquals(NAME_1, resourceRetrieved.getName());
+		assertEquals(AUTHOR_1, resourceRetrieved.getAuthor());
+		assertEquals(DATE_1, resourceRetrieved.getDate());
 	}
 }
