@@ -140,16 +140,22 @@ public class ArchiveManager {
 		try {
 			// System.out.println(archive.getName() + archive.getTeamNumber() +
 			// archive.getPhone());
-			List<Archive> archives1 = this.getAllArchives();
-			for(int i = 0; i < archives1.size(); i++ ){
+			ResultSet rs = getAllArchivesStmt.executeQuery();
+			while (rs.next()) {
+				if((rs.getString("name")).equals(archive.getName())){
+					archive.setId(rs.getInt("id"));
+				}
+			}
+			/*List<Archive> archives1 = this.getAllArchives();
+			for(int i = 1; i < archives1.size(); i++ ){
 				Archive a = archives1.get(i);
-				if(archive.equals(a.getName())){
+				if((archive.getName()).equals(a.getName())){
 					System.out.println(archive.getName());
 					archive.setId(a.getId());
 				}
-			}
+			}*/
 			updateArchiveStmt.setInt(1, archive.getTeamNumber());
-			updateArchiveStmt.setLong(2, archive.getId());
+			updateArchiveStmt.setInt(2, (int) archive.getId());
 			System.out.println(updateArchiveStmt);
 			count = updateArchiveStmt.executeUpdate();
 		} catch (SQLException e) {

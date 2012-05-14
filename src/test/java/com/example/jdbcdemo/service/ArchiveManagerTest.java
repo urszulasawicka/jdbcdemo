@@ -54,16 +54,16 @@ public class ArchiveManagerTest {
 	@Test
 	public void checkUpdating(){
 		
-		Archive archive1 = new Archive(ID, NAME1, TEAMNUMBER2, PHONE2);
+		Archive archive1 = new Archive(NAME1, TEAMNUMBER2, PHONE2);
 		archiveManager.clearArchives();
 		List<Archive> archives1 = archiveManager.getAllArchives();
-		for(int i = 0; i < archives1.size(); i++ ){
+		/*for(int i = 0; i < archives1.size(); i++ ){
 			Archive a = archives1.get(i);
 			System.out.println(a.getId());
 			if(NAME1.equals(a.getName())){
 				archive1.setId(a.getId());
 			}
-		}
+		}*/
 		assertEquals(1, archiveManager.updateArchive(archive1));
 		
 		Archive archiveRetrieved1 = archives1.get(0);
