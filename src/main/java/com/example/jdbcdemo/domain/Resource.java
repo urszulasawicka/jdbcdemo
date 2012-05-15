@@ -6,6 +6,7 @@ public class Resource {
 	private String name;
 	private String author;
 	private int date;
+	private int teamNumber;
 	
 	public Resource() {
 		super();
@@ -23,6 +24,13 @@ public class Resource {
 		this.author = author;
 		this.date = date;
 	}
+	public Resource(String name1, String author1, int date1, int teamnumber1) {
+		super();
+		this.name = name1;
+		this.author = author1;
+		this.date = date1;
+		this.teamNumber = teamnumber1;
+	}
 	public long getId() {
 		return id;
 	}
@@ -35,6 +43,14 @@ public class Resource {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public int getTeamNumber() {
+		return teamNumber;
+	}
+	public void setTeamNumber(int teamNumber) {
+		this.teamNumber = teamNumber;
+	}
+	
 	public String getAuthor() {
 		return author;
 	}

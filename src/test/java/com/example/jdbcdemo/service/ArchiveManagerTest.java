@@ -28,7 +28,7 @@ public class ArchiveManagerTest {
 		assertNotNull(archiveManager.getConnection());
 	}
 	
-	@Test
+	/*@Test
 	public void checkAdding(){
 		Archive archive1 = new Archive(NAME_1, TEAMNUMBER_1, PHONE_1);
 		Archive archive2 = new Archive(NAME_2, TEAMNUMBER_2, PHONE_2);
@@ -104,6 +104,6 @@ public class ArchiveManagerTest {
 		List<Archive> archives = archiveManager.getAllArchives();
 		
 		assertEquals(1, archives.size());
-	}
+	}*/
 
 }
