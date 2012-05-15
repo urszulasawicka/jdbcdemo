@@ -87,4 +87,31 @@ public class ResourceManagerTest {
 		
 	}
 	
+	@Test
+	public void checkDeletingResourceFromArchive(){
+		Resource resource1 = new Resource(NAME_1, AUTHOR_1, DATE_1);
+		Resource resource2 = new Resource(NAME_2, AUTHOR_2, DATE_2);
+		Resource resource3 = new Resource(NAME_3, AUTHOR_3, DATE_3);
+		Archive archive1 = new Archive(NAMEARCHIVE_1, TEAMNUMBERARCHIVE_1, PHONEARCHIVE_1);
+		Archive archive2 = new Archive(NAMEARCHIVE_2, TEAMNUMBERARCHIVE_2, PHONEARCHIVE_2);
+		Archive archive3 = new Archive(NAMEARCHIVE_1, 100, PHONEARCHIVE_1);
+		resourceManager.clearResources();
+		assertEquals(1, resourceManager.addResource(resource1));
+		assertEquals(1, resourceManager.addResource(resource2));
+		assertEquals(1, archiveManager.addArchive(archive1));
+		assertEquals(1, archiveManager.addArchive(archive2));
+		assertEquals(2, resourceManager.countRows());
+		assertEquals(1, resourceManager.addResourceToArchive(resource3, archive3));
+		assertEquals(3, resourceManager.countRows());
+		assertEquals(1, resourceManager.deleteResourceFromArchive(resource3, archive3));
+		List<Resource> resources2 = resourceManager.getAllResources();
+		Resource resourceRetrieved1 = resources2.get(2);
+		System.out.println(resourceRetrieved1);
+		assertEquals(NAME_3, resourceRetrieved1.getName());
+		assertEquals(AUTHOR_3, resourceRetrieved1.getAuthor());
+		assertEquals(DATE_3, resourceRetrieved1.getDate());
+		assertEquals(0, resourceRetrieved1.getTeamNumber());
+		
+	}
+	
 }

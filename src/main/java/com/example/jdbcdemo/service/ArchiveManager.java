@@ -145,7 +145,6 @@ public class ArchiveManager {
 					updateArchiveStmt.setString(2, archive.getPhone());
 					updateArchiveStmt.setString(3, archive.getName());
 					count = updateArchiveStmt.executeUpdate();
-					System.out.println(updateArchiveStmt);
 				}
 			}
 		} catch (SQLException e) {
@@ -162,7 +161,6 @@ public class ArchiveManager {
 			while (rs.next()) {
 				if(rs.getString(2).equals(archive.getName())){
 					deleteArchiveStmt.setString(1, archive.getName());
-					System.out.println(deleteArchiveStmt);
 					count = deleteArchiveStmt.executeUpdate();
 				}
 			}

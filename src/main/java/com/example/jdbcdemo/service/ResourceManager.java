@@ -24,6 +24,7 @@ public class ResourceManager {
 	private PreparedStatement getAllResourcesStmt;
 	private PreparedStatement deleteAllResourcesStmt;
 	private PreparedStatement deleteAllArchivesStmt;
+	private PreparedStatement deleteResourceStmt;
 	private String url = "jdbc:hsqldb:hsql://localhost/workdb";
 	public ResourceManager() {
 		super();
@@ -51,6 +52,7 @@ public class ResourceManager {
 			getAllResourcesStmt = connection.prepareStatement("SELECT id, name, author, date, teamnumber FROM Resource");
 			deleteAllArchivesStmt = connection
 					.prepareStatement("DELETE FROM Archive");
+			deleteResourceStmt = connection.prepareStatement("DELETE FROM Resource WHERE teamnumber = ?");
 			deleteAllResourcesStmt = connection.prepareStatement("DELETE FROM Resource");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -155,7 +157,6 @@ public class ResourceManager {
 		while (rsA.next()){
 			if((r.getName()).equals(rsA.getString("name"))){
 				resourceExists = 1;
-				System.out.println("ResourceExists");
 				break;
 			}
 		}
@@ -167,7 +168,6 @@ public class ResourceManager {
 				if(((Integer)tmpA.getTeamNumber()).equals(a.getTeamNumber())){
 					updateResourceToArchiveStmt.setInt(1, a.getTeamNumber());
 					updateResourceToArchiveStmt.setString(2, r.getName());
-					System.out.println(updateResourceToArchiveStmt);
 					count = updateResourceToArchiveStmt.executeUpdate();
 				}
 			}
@@ -188,12 +188,55 @@ public class ResourceManager {
 				addArchiveStmt.setInt(2, a.getTeamNumber());
 				addArchiveStmt.setString(3, a.getPhone());
 				addArchiveStmt.executeUpdate();
-				System.out.println(addArchiveStmt);
 				updateResourceToArchiveStmt.setInt(1, a.getTeamNumber());
 				updateResourceToArchiveStmt.setString(2, r.getName());
-				System.out.println(updateResourceToArchiveStmt);
 				count = updateResourceToArchiveStmt.executeUpdate();
 			
+		}
+		connection.commit();
+		} catch (SQLException e) {
+			try {
+				connection.rollback();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+		return count;
+	}
+	
+	public int deleteResourceFromArchive(Resource r, Archive a) {
+		int count = 0;
+		int resourceExists = 0;
+		try {
+		connection.setAutoCommit(true); // true - kazda transakcja osobna
+		ResultSet rsA = getAllResourcesStmt.executeQuery();
+		while (rsA.next()){
+			if((r.getName()).equals(rsA.getString("name"))){
+				resourceExists = 1;
+				break;
+			}
+		}
+		if( resourceExists == 1 ){
+			ResultSet rs = getAllArchivesStmt.executeQuery();
+			while (rs.next()){
+				Integer empty = 0;
+				Archive tmpA = new Archive();
+				tmpA.setTeamNumber(rs.getInt("teamNumber"));
+				if(((Integer)tmpA.getTeamNumber()).equals(a.getTeamNumber())){
+					deleteResourceStmt.setInt(1, (Integer)tmpA.getTeamNumber());
+					deleteResourceStmt.executeUpdate();
+					addResourceStmt.setString(1, r.getName());
+					addResourceStmt.setString(2, r.getAuthor());
+					addResourceStmt.setInt(3, r.getDate());
+					count = addResourceStmt.executeUpdate();
+				}
+			}
+		}
+		else {
+			System.out.println("Resource don't exists!!!");
+		}
+		if (count == 0){
+			System.out.println("Archive don't exists!!!");
 		}
 		connection.commit();
 		} catch (SQLException e) {
