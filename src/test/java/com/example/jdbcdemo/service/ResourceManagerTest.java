@@ -74,8 +74,9 @@ public class ResourceManagerTest {
 		assertEquals(1, resourceManager.addResource(resource2));
 		assertEquals(1, archiveManager.addArchive(archive1));
 		assertEquals(1, archiveManager.addArchive(archive2));
-		
+		assertEquals(2, resourceManager.countRows());
 		assertEquals(1, resourceManager.addResourceToArchive(resource3, archive3));
+		assertEquals(3, resourceManager.countRows());
 		List<Resource> resources2 = resourceManager.getAllResources();
 		Resource resourceRetrieved1 = resources2.get(2);
 		System.out.println(resourceRetrieved1);

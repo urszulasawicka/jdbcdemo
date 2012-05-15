@@ -111,6 +111,21 @@ public class ResourceManager {
 			e.printStackTrace();
 		}
 	}
+	
+	public int countRows(){
+		int count = 0;
+		try {
+			ResultSet rs = getAllResourcesStmt.executeQuery();
+			while (rs.next()){
+				count++;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return count;
+	}
+	
 	public List<Resource> getAllResources() {
 		List<Resource> resources = new ArrayList<Resource>();
 		try {
