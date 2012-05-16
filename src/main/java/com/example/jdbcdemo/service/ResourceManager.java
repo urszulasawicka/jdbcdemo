@@ -219,7 +219,6 @@ public class ResourceManager {
 		if( resourceExists == 1 ){
 			ResultSet rs = getAllArchivesStmt.executeQuery();
 			while (rs.next()){
-				Integer empty = 0;
 				Archive tmpA = new Archive();
 				tmpA.setTeamNumber(rs.getInt("teamNumber"));
 				if(((Integer)tmpA.getTeamNumber()).equals(a.getTeamNumber())){
@@ -237,6 +236,45 @@ public class ResourceManager {
 		}
 		if (count == 0){
 			System.out.println("Archive don't exists!!!");
+		}
+		connection.commit();
+		} catch (SQLException e) {
+			try {
+				connection.rollback();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+		return count;
+	}
+	
+	public int selectResourceFromArchive(Archive a) {
+		int count = 0;
+		int archiveExists = 0;
+		try {
+		connection.setAutoCommit(true); // true - kazda transakcja osobna
+		ResultSet rsA = getAllArchivesStmt.executeQuery();
+		while (rsA.next()){
+			if((a.getName()).equals(rsA.getString("name"))){
+				archiveExists = 1;
+				break;
+			}
+		}
+		if( archiveExists == 1 ){
+			ResultSet rs = getAllResourcesStmt.executeQuery();
+			while (rs.next()){
+				Resource tmpR = new Resource();
+				tmpR.setTeamNumber(rs.getInt("teamNumber"));
+				if(((Integer)tmpR.getTeamNumber()).equals(a.getTeamNumber())){
+					count ++;
+				}
+			}
+		}
+		else {
+			System.out.println("Archive don't exists!!!");
+		}
+		if (count == 0){
+			System.out.println("Archive don't have any resources!!!");
 		}
 		connection.commit();
 		} catch (SQLException e) {
