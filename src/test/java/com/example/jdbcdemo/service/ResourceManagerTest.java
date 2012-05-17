@@ -15,15 +15,18 @@ public class ResourceManagerTest {
 	
 	private final static String NAME_1 = "Księgi ziemskie";
 	private final static String AUTHOR_1 = "Przasnysiensia";
+	private final static int ISBN_1 = 43;
 	private final static int DATE_1 = 1585;
 	private final static int TEAMNUMBER_1 = 189;
 	
 	private final static String NAME_2 = "Akta malborskie";
 	private final static String AUTHOR_2 = "Kanclerz Namiestnik";
+	private final static int ISBN_2 = 67;
 	private final static int DATE_2 = 1832;
 	
 	private final static String NAME_3 = "Odczyty staromodne";
 	private final static String AUTHOR_3 = "Kowalska";
+	private final static int ISBN_3 = 89;
 	private final static int DATE_3 = 1788;
 	
 	private final static String NAMEARCHIVE_1 = "Centrum";
@@ -39,11 +42,11 @@ public class ResourceManagerTest {
 	public void checkConnection(){
 		assertNotNull(resourceManager.getConnection());
 	}
-
-	/*@Test
+/*
+	@Test
 	public void checkAdding(){
-		Resource resource1 = new Resource(NAME_1, AUTHOR_1, DATE_1);
-		Resource resource2 = new Resource(NAME_2, AUTHOR_2, DATE_2);
+		Resource resource1 = new Resource(NAME_1, AUTHOR_1, ISBN_1, DATE_1);
+		Resource resource2 = new Resource(NAME_2, AUTHOR_2, ISBN_2, DATE_2);
 		resourceManager.clearResources();
 		assertEquals(1, resourceManager.addResource(resource1));
 		assertEquals(1, resourceManager.addResource(resource2));
@@ -53,20 +56,22 @@ public class ResourceManagerTest {
 		
 		assertEquals(NAME_1, resourceRetrieved1.getName());
 		assertEquals(AUTHOR_1, resourceRetrieved1.getAuthor());
+		assertEquals(ISBN_1, resourceRetrieved1.getIsbn());
 		assertEquals(DATE_1, resourceRetrieved1.getDate());
 		
 		Resource resourceRetrieved2 = resources.get(1);
 		
 		assertEquals(NAME_2, resourceRetrieved2.getName());
 		assertEquals(AUTHOR_2, resourceRetrieved2.getAuthor());
+		assertEquals(ISBN_2, resourceRetrieved2.getIsbn());
 		assertEquals(DATE_2, resourceRetrieved2.getDate());
 	}
 	
 	@Test
 	public void checkAddingResourceToArchive(){
-		Resource resource1 = new Resource(NAME_1, AUTHOR_1, DATE_1);
-		Resource resource2 = new Resource(NAME_2, AUTHOR_2, DATE_2);
-		Resource resource3 = new Resource(NAME_3, AUTHOR_3, DATE_3);
+		Resource resource1 = new Resource(NAME_1, AUTHOR_1, ISBN_1, DATE_1);
+		Resource resource2 = new Resource(NAME_2, AUTHOR_2, ISBN_2, DATE_2);
+		Resource resource3 = new Resource(NAME_3, AUTHOR_3, ISBN_3, DATE_3);
 		Archive archive1 = new Archive(NAMEARCHIVE_1, TEAMNUMBERARCHIVE_1, PHONEARCHIVE_1);
 		Archive archive2 = new Archive(NAMEARCHIVE_2, TEAMNUMBERARCHIVE_2, PHONEARCHIVE_2);
 		Archive archive3 = new Archive(NAMEARCHIVE_1, TEAMNUMBERARCHIVE_3, PHONEARCHIVE_1);
@@ -80,19 +85,19 @@ public class ResourceManagerTest {
 		assertEquals(3, resourceManager.countRows());
 		List<Resource> resources2 = resourceManager.getAllResources();
 		Resource resourceRetrieved1 = resources2.get(2);
-		System.out.println(resourceRetrieved1);
 		assertEquals(NAME_3, resourceRetrieved1.getName());
 		assertEquals(AUTHOR_3, resourceRetrieved1.getAuthor());
+		assertEquals(ISBN_3, resourceRetrieved1.getIsbn());
 		assertEquals(DATE_3, resourceRetrieved1.getDate());
-		assertEquals(100, resourceRetrieved1.getTeamNumber());
+		assertEquals(TEAMNUMBERARCHIVE_3, resourceRetrieved1.getTeamNumber());
 		
 	}
 	
 	@Test
 	public void checkDeletingResourceFromArchive(){
-		Resource resource1 = new Resource(NAME_1, AUTHOR_1, DATE_1);
-		Resource resource2 = new Resource(NAME_2, AUTHOR_2, DATE_2);
-		Resource resource3 = new Resource(NAME_3, AUTHOR_3, DATE_3);
+		Resource resource1 = new Resource(NAME_1, AUTHOR_1, ISBN_1, DATE_1);
+		Resource resource2 = new Resource(NAME_2, AUTHOR_2, ISBN_2, DATE_2);
+		Resource resource3 = new Resource(NAME_3, AUTHOR_3, ISBN_3, DATE_3);
 		Archive archive1 = new Archive(NAMEARCHIVE_1, TEAMNUMBERARCHIVE_1, PHONEARCHIVE_1);
 		Archive archive2 = new Archive(NAMEARCHIVE_2, TEAMNUMBERARCHIVE_2, PHONEARCHIVE_2);
 		Archive archive3 = new Archive(NAMEARCHIVE_1, TEAMNUMBERARCHIVE_3, PHONEARCHIVE_1);
@@ -107,19 +112,19 @@ public class ResourceManagerTest {
 		assertEquals(1, resourceManager.deleteResourceFromArchive(resource3, archive3));
 		List<Resource> resources2 = resourceManager.getAllResources();
 		Resource resourceRetrieved1 = resources2.get(2);
-		System.out.println(resourceRetrieved1);
 		assertEquals(NAME_3, resourceRetrieved1.getName());
 		assertEquals(AUTHOR_3, resourceRetrieved1.getAuthor());
+		assertEquals(ISBN_3, resourceRetrieved1.getIsbn());
 		assertEquals(DATE_3, resourceRetrieved1.getDate());
 		assertEquals(0, resourceRetrieved1.getTeamNumber());
 		
-	}
+	}*/
 	
 	@Test
 	public void checkSelectingResourceFromArchive(){
-		Resource resource1 = new Resource(NAME_1, AUTHOR_1, DATE_1);
-		Resource resource2 = new Resource(NAME_2, AUTHOR_2, DATE_2);
-		Resource resource3 = new Resource(NAME_3, AUTHOR_3, DATE_3);
+		Resource resource1 = new Resource(NAME_1, AUTHOR_1, ISBN_1, DATE_1);
+		Resource resource2 = new Resource(NAME_2, AUTHOR_2, ISBN_2, DATE_2);
+		Resource resource3 = new Resource(NAME_3, AUTHOR_3, ISBN_3, DATE_3);
 		Archive archive1 = new Archive(NAMEARCHIVE_1, TEAMNUMBERARCHIVE_1, PHONEARCHIVE_1);
 		Archive archive2 = new Archive(NAMEARCHIVE_2, TEAMNUMBERARCHIVE_2, PHONEARCHIVE_2);
 		Archive archive3 = new Archive(NAMEARCHIVE_1, TEAMNUMBERARCHIVE_3, PHONEARCHIVE_1);
@@ -134,5 +139,5 @@ public class ResourceManagerTest {
 		assertEquals(3, resourceManager.countRows());
 		assertEquals(2, resourceManager.selectResourceFromArchive(archive3));
 		
-	}*/
+	}
 }

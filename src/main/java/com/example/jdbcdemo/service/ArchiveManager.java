@@ -82,30 +82,6 @@ public class ArchiveManager {
 		this.connection = connection;
 	}
 
-	public Statement getStatement() {
-		return statement;
-	}
-
-	public void setStatement(Statement statement) {
-		this.statement = statement;
-	}
-
-	public PreparedStatement getAddArchiveStmt() {
-		return addArchiveStmt;
-	}
-
-	public void setAddArchiveStmt(PreparedStatement addArchiveStmt) {
-		this.addArchiveStmt = addArchiveStmt;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
 	public void clearArchives() {
 		try {
 			deleteAllArchivesStmt.executeUpdate();
