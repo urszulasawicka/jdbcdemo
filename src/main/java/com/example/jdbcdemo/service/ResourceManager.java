@@ -85,12 +85,16 @@ public class ResourceManager {
 		}
 	}
 	
-	public int countRows(){
+	public int countRows(Archive archive){
 		int count = 0;
+		Resource tmpR = new Resource();
 		try {
 			ResultSet rs = getAllResourcesStmt.executeQuery();
 			while (rs.next()){
-				count++;
+				tmpR.setTeamNumber(rs.getInt("teamNumber"));
+				if(((Integer)tmpR.getTeamNumber()).equals(archive.getTeamNumber())){
+					count++;
+				}
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

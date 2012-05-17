@@ -80,9 +80,9 @@ public class ResourceManagerTest {
 		assertEquals(1, resourceManager.addResource(resource2));
 		assertEquals(1, archiveManager.addArchive(archive1));
 		assertEquals(1, archiveManager.addArchive(archive2));
-		assertEquals(2, resourceManager.countRows());
+		assertEquals(0, resourceManager.countRows(archive3));
 		assertEquals(1, resourceManager.addResourceToArchive(resource3, archive3));
-		assertEquals(3, resourceManager.countRows());
+		assertEquals(1, resourceManager.countRows(archive3));
 		List<Resource> resources2 = resourceManager.getAllResources();
 		Resource resourceRetrieved1 = resources2.get(2);
 		assertEquals(NAME_3, resourceRetrieved1.getName());
@@ -106,10 +106,11 @@ public class ResourceManagerTest {
 		assertEquals(1, resourceManager.addResource(resource2));
 		assertEquals(1, archiveManager.addArchive(archive1));
 		assertEquals(1, archiveManager.addArchive(archive2));
-		assertEquals(2, resourceManager.countRows());
+		assertEquals(0, resourceManager.countRows(archive3));
 		assertEquals(1, resourceManager.addResourceToArchive(resource3, archive3));
-		assertEquals(3, resourceManager.countRows());
+		assertEquals(1, resourceManager.countRows(archive3));
 		assertEquals(1, resourceManager.deleteResourceFromArchive(resource3, archive3));
+		assertEquals(0, resourceManager.countRows(archive3));
 		List<Resource> resources2 = resourceManager.getAllResources();
 		Resource resourceRetrieved1 = resources2.get(2);
 		assertEquals(NAME_3, resourceRetrieved1.getName());
@@ -118,8 +119,8 @@ public class ResourceManagerTest {
 		assertEquals(DATE_3, resourceRetrieved1.getDate());
 		assertEquals(0, resourceRetrieved1.getTeamNumber());
 		
-	}*/
-	
+	}
+	*/
 	@Test
 	public void checkSelectingResourceFromArchive(){
 		Resource resource1 = new Resource(NAME_1, AUTHOR_1, ISBN_1, DATE_1);
@@ -133,10 +134,10 @@ public class ResourceManagerTest {
 		assertEquals(1, resourceManager.addResource(resource2));
 		assertEquals(1, archiveManager.addArchive(archive1));
 		assertEquals(1, archiveManager.addArchive(archive2));
-		assertEquals(2, resourceManager.countRows());
+		assertEquals(0, resourceManager.countRows(archive3));
 		assertEquals(1, resourceManager.addResourceToArchive(resource3, archive3));
 		assertEquals(1, resourceManager.addResourceToArchive(resource2, archive3));
-		assertEquals(3, resourceManager.countRows());
+		assertEquals(2, resourceManager.countRows(archive3));
 		assertEquals(2, resourceManager.selectResourceFromArchive(archive3));
 		
 	}
