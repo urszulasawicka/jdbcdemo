@@ -105,5 +105,24 @@ public class ArchiveManagerTest {
 		
 		assertEquals(1, archives.size());
 	}
+	
+	@Test
+	public void checkSearching(){
+		Archive archive1 = new Archive(NAME_1, TEAMNUMBER_1, PHONE_1);
+		Archive archive2 = new Archive(NAME_2, TEAMNUMBER_2, PHONE_2);
+		archiveManager.clearArchives();
+		assertEquals(1, archiveManager.addArchive(archive1));
+		assertEquals(1, archiveManager.addArchive(archive2));
+		
+		assertEquals(1, archiveManager.searchArchive(archive1));
+		
+		List<Archive> archives = archiveManager.getAllArchives();
+		
+		Archive archiveRetrieved = archives.get(0);
+		
+		assertEquals(NAME_1, archiveRetrieved.getName());
+		assertEquals(TEAMNUMBER_1, archiveRetrieved.getTeamNumber());
+		assertEquals(PHONE_1, archiveRetrieved.getPhone());
+	}
 
 }
