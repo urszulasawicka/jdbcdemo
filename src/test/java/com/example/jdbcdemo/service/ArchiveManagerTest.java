@@ -80,14 +80,14 @@ public class ArchiveManagerTest {
 		assertEquals(1, archiveManager.addArchive(archive1));
 		assertEquals(1, archiveManager.addArchive(archive2));
 		
-		Archive archive3 = new Archive(NAME_2, TEAMNUMBER_3, PHONE_3);
+		Archive archive3 = new Archive(NAME_3, TEAMNUMBER_2, PHONE_3);
 		assertEquals(1, archiveManager.updateArchive(archive3));
 		List<Archive> archives = archiveManager.getAllArchives();
 		
 		Archive archiveRetrieved = archives.get(1);
 		
-		assertEquals(NAME_2, archiveRetrieved.getName());
-		assertEquals(TEAMNUMBER_3, archiveRetrieved.getTeamNumber());
+		assertEquals(NAME_3, archiveRetrieved.getName());
+		assertEquals(TEAMNUMBER_2, archiveRetrieved.getTeamNumber());
 		assertEquals(PHONE_3, archiveRetrieved.getPhone());
 	}
 

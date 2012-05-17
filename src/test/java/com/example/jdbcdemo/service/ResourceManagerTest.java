@@ -113,7 +113,7 @@ public class ResourceManagerTest {
 		assertEquals(DATE_3, resourceRetrieved1.getDate());
 		assertEquals(0, resourceRetrieved1.getTeamNumber());
 		
-	}*/
+	}
 	
 	@Test
 	public void checkSelectingResourceFromArchive(){
@@ -133,13 +133,6 @@ public class ResourceManagerTest {
 		assertEquals(1, resourceManager.addResourceToArchive(resource2, archive3));
 		assertEquals(3, resourceManager.countRows());
 		assertEquals(2, resourceManager.selectResourceFromArchive(archive3));
-		/*List<Resource> resources2 = resourceManager.getAllResources();
-		Resource resourceRetrieved1 = resources2.get(2);
-		System.out.println(resourceRetrieved1);
-		assertEquals(NAME_3, resourceRetrieved1.getName());
-		assertEquals(AUTHOR_3, resourceRetrieved1.getAuthor());
-		assertEquals(DATE_3, resourceRetrieved1.getDate());
-		assertEquals(0, resourceRetrieved1.getTeamNumber());*/
 		
-	}
+	}*/
 }

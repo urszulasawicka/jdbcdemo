@@ -50,9 +50,9 @@ public class ArchiveManager {
 			deleteAllArchivesStmt = connection
 					.prepareStatement("DELETE FROM Archive");
 			updateArchiveStmt = connection
-					.prepareStatement("UPDATE archive SET teamNumber = ?, phone = ? WHERE name = ?");
+					.prepareStatement("UPDATE archive SET name = ?, phone = ? WHERE teamNumber = ?");
 			deleteArchiveStmt = connection
-					.prepareStatement("DELETE FROM Archive WHERE name = ?");
+					.prepareStatement("DELETE FROM Archive WHERE teamNumber = ?");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -140,10 +140,10 @@ public class ArchiveManager {
 		try {
 			ResultSet rs = getAllArchivesStmt.executeQuery();
 			while (rs.next()) {
-				if(rs.getString(2).equals(archive.getName())){
-					updateArchiveStmt.setInt(1, archive.getTeamNumber());
+				if(((Integer)rs.getInt("teamNumber")).equals((Integer)archive.getTeamNumber())){
+					updateArchiveStmt.setString(1, archive.getName());
 					updateArchiveStmt.setString(2, archive.getPhone());
-					updateArchiveStmt.setString(3, archive.getName());
+					updateArchiveStmt.setInt(3, archive.getTeamNumber());
 					count = updateArchiveStmt.executeUpdate();
 				}
 			}
@@ -159,8 +159,8 @@ public class ArchiveManager {
 		try {
 			ResultSet rs = getAllArchivesStmt.executeQuery();
 			while (rs.next()) {
-				if(rs.getString(2).equals(archive.getName())){
-					deleteArchiveStmt.setString(1, archive.getName());
+				if(((Integer)rs.getInt("teamNumber")).equals((Integer)archive.getTeamNumber())){
+					deleteArchiveStmt.setInt(1, archive.getTeamNumber());
 					count = deleteArchiveStmt.executeUpdate();
 				}
 			}
