@@ -42,7 +42,7 @@ public class ResourceManagerTest {
 	public void checkConnection(){
 		assertNotNull(resourceManager.getConnection());
 	}
-/*
+
 	@Test
 	public void checkAdding(){
 		Resource resource1 = new Resource(NAME_1, AUTHOR_1, ISBN_1, DATE_1);
@@ -120,7 +120,7 @@ public class ResourceManagerTest {
 		assertEquals(0, resourceRetrieved1.getTeamNumber());
 		
 	}
-	*/
+	
 	@Test
 	public void checkSelectingResourceFromArchive(){
 		Resource resource1 = new Resource(NAME_1, AUTHOR_1, ISBN_1, DATE_1);
@@ -139,6 +139,27 @@ public class ResourceManagerTest {
 		assertEquals(1, resourceManager.addResourceToArchive(resource2, archive3));
 		assertEquals(2, resourceManager.countRows(archive3));
 		assertEquals(2, resourceManager.selectResourceFromArchive(archive3));
+		
+	}
+	
+	@Test
+	public void checkSelectingResourceFromArchiveAfter(){
+		Resource resource1 = new Resource(NAME_1, AUTHOR_1, ISBN_1, DATE_1);
+		Resource resource2 = new Resource(NAME_2, AUTHOR_2, ISBN_2, DATE_2);
+		Resource resource3 = new Resource(NAME_3, AUTHOR_3, ISBN_3, DATE_3);
+		Archive archive1 = new Archive(NAMEARCHIVE_1, TEAMNUMBERARCHIVE_1, PHONEARCHIVE_1);
+		Archive archive2 = new Archive(NAMEARCHIVE_2, TEAMNUMBERARCHIVE_2, PHONEARCHIVE_2);
+		Archive archive3 = new Archive(NAMEARCHIVE_1, TEAMNUMBERARCHIVE_3, PHONEARCHIVE_1);
+		resourceManager.clearResources();
+		assertEquals(1, resourceManager.addResource(resource1));
+		assertEquals(1, resourceManager.addResource(resource2));
+		assertEquals(1, archiveManager.addArchive(archive1));
+		assertEquals(1, archiveManager.addArchive(archive2));
+		assertEquals(0, resourceManager.countRows(archive3));
+		assertEquals(1, resourceManager.addResourceToArchive(resource3, archive3));
+		assertEquals(1, resourceManager.addResourceToArchive(resource2, archive3));
+		assertEquals(2, resourceManager.countRows(archive3));
+		assertEquals(2, resourceManager.selectResourceFromArchiveAfter(archive3, 1787));
 		
 	}
 }
