@@ -271,7 +271,7 @@ public class ResourceManager {
 		int count = 0;
 		int archiveExists = 0;
 		try {
-		connection.setAutoCommit(true); // true - kazda transakcja osobna
+		connection.setAutoCommit(true); 
 		ResultSet rsA = getAllArchivesStmt.executeQuery();
 		while (rsA.next()){
 			if(((Integer)rsA.getInt("teamNumber")).equals((Integer)a.getTeamNumber())){
@@ -296,6 +296,7 @@ public class ResourceManager {
 		if (count == 0){
 			System.out.println("Archive don't have any resources!!!");
 		}
+		//if (true) throw new SQLException("Bo mi się nie podoba!");
 		connection.commit();
 		} catch (SQLException e) {
 			try {
