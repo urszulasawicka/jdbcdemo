@@ -42,6 +42,7 @@ public class ResourceManager {
 					break;
 				}
 			}
+			connection.setAutoCommit(false);
 			if (!tableExists)
 				statement.executeUpdate(createResourceTable);
 			
@@ -56,6 +57,8 @@ public class ResourceManager {
 					.prepareStatement("DELETE FROM Archive");
 			deleteResourceStmt = connection.prepareStatement("DELETE FROM Resource WHERE teamnumber = ?");
 			deleteAllResourcesStmt = connection.prepareStatement("DELETE FROM Resource");
+			connection.commit();
+			connection.setAutoCommit(true);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -65,11 +68,14 @@ public class ResourceManager {
 	public int addResource(Resource resource){
 		int count = 0;
 		try {
+			connection.setAutoCommit(false);
 			addResourceStmt.setString(1, resource.getName());
 			addResourceStmt.setString(2, resource.getAuthor());
 			addResourceStmt.setInt(3, resource.getIsbn());
 			addResourceStmt.setInt(4, resource.getDate());
 			count = addResourceStmt.executeUpdate();
+			connection.commit();
+			connection.setAutoCommit(true);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -79,8 +85,11 @@ public class ResourceManager {
 	}
 	public void clearResources() {
 		try {
+			connection.setAutoCommit(false);
 			deleteAllResourcesStmt.executeUpdate();
 			deleteAllArchivesStmt.executeUpdate();
+			connection.commit();
+			connection.setAutoCommit(true);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -130,7 +139,7 @@ public class ResourceManager {
 		int count = 0;
 		int resourceExists = 0;
 		try {
-		connection.setAutoCommit(true);
+		connection.setAutoCommit(false);
 		ResultSet rsA = getAllResourcesStmt.executeQuery();
 		while (rsA.next()){
 			if(((Integer)r.getIsbn()).equals((Integer)rsA.getInt("isbn"))){
@@ -173,6 +182,7 @@ public class ResourceManager {
 			
 		}
 		connection.commit();
+		connection.setAutoCommit(true);
 		} catch (SQLException e) {
 			try {
 				connection.rollback();
@@ -187,7 +197,7 @@ public class ResourceManager {
 		int count = 0;
 		int resourceExists = 0;
 		try {
-		connection.setAutoCommit(true); // true - kazda transakcja osobna
+		connection.setAutoCommit(false);
 		ResultSet rsA = getAllResourcesStmt.executeQuery();
 		while (rsA.next()){
 			if(((Integer)r.getIsbn()).equals((Integer)rsA.getInt("isbn"))){
@@ -218,6 +228,7 @@ public class ResourceManager {
 			System.out.println("Archive don't exists!!!");
 		}
 		connection.commit();
+		connection.setAutoCommit(true);
 		} catch (SQLException e) {
 			try {
 				connection.rollback();
@@ -232,7 +243,7 @@ public class ResourceManager {
 		int count = 0;
 		int archiveExists = 0;
 		try {
-		connection.setAutoCommit(true); // true - kazda transakcja osobna
+		connection.setAutoCommit(false);
 		ResultSet rsA = getAllArchivesStmt.executeQuery();
 		while (rsA.next()){
 			if(((Integer)rsA.getInt("teamNumber")).equals((Integer)a.getTeamNumber())){
@@ -257,6 +268,7 @@ public class ResourceManager {
 			System.out.println("Archive don't have any resources!!!");
 		}
 		connection.commit();
+		connection.setAutoCommit(true);
 		} catch (SQLException e) {
 			try {
 				connection.rollback();
@@ -271,7 +283,7 @@ public class ResourceManager {
 		int count = 0;
 		int archiveExists = 0;
 		try {
-		connection.setAutoCommit(true); 
+		connection.setAutoCommit(false); 
 		ResultSet rsA = getAllArchivesStmt.executeQuery();
 		while (rsA.next()){
 			if(((Integer)rsA.getInt("teamNumber")).equals((Integer)a.getTeamNumber())){
@@ -298,6 +310,7 @@ public class ResourceManager {
 		}
 		//if (true) throw new SQLException("Bo mi się nie podoba!");
 		connection.commit();
+		connection.setAutoCommit(true);
 		} catch (SQLException e) {
 			try {
 				connection.rollback();
