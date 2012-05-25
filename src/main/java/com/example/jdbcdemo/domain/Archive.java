@@ -49,13 +49,7 @@ public class Archive implements Comparable<Archive>{
 	}
 	
 	public int compareTo(Archive compareArchive) {
-		 
 		int compareTeamNumber = ((Archive) compareArchive).getTeamNumber(); 
-		//ascending order
 		return this.teamNumber - compareTeamNumber;
- 
-		//descending order
-		//return compareQuantity - this.quantity;
- 
 	}	
 }

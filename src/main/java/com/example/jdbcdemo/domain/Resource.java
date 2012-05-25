@@ -1,6 +1,6 @@
 package com.example.jdbcdemo.domain;
 
-public class Resource {
+public class Resource implements Comparable<Resource>{
 	
 	private long id;
 	private String name;
@@ -72,6 +72,11 @@ public class Resource {
 	}
 	public void setDate(int date) {
 		this.date = date;
+	}
+	
+	public int compareTo(Resource compareResource) {
+		int compareIsbn = ((Resource) compareResource).getIsbn(); 
+		return this.isbn - compareIsbn;
 	}
 
 }

@@ -24,7 +24,7 @@ public class ArchiveManagerTest {
 	private final static String NAME_3 = "Filia";
 	private final static int TEAMNUMBER_3 = 159;
 	private final static String PHONE_3 = "(78) 123-45-12";
-	
+	/*
 	@Before
 	public void init(){
 		Archive archive1 = new Archive(NAME_1, TEAMNUMBER_1, PHONE_1);
@@ -110,6 +110,6 @@ public class ArchiveManagerTest {
 				assertEquals(PHONE_1, a.getPhone());
 			}
 		}
-	}
+	}*/
 
 }

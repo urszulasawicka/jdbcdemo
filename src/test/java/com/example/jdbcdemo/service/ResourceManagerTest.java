@@ -3,6 +3,7 @@ package com.example.jdbcdemo.service;
 import static org.junit.Assert.*;
 
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -58,21 +59,21 @@ public class ResourceManagerTest {
 	}
 
 	@Test
-	public void checkAdding(){
-		List<Resource> resources = resourceManager.getAllResources();
-		Resource resourceRetrieved1 = resources.get(0);
-		
-		assertEquals(NAME_1, resourceRetrieved1.getName());
-		assertEquals(AUTHOR_1, resourceRetrieved1.getAuthor());
-		assertEquals(ISBN_1, resourceRetrieved1.getIsbn());
-		assertEquals(DATE_1, resourceRetrieved1.getDate());
-		
-		Resource resourceRetrieved2 = resources.get(1);
-		
-		assertEquals(NAME_2, resourceRetrieved2.getName());
-		assertEquals(AUTHOR_2, resourceRetrieved2.getAuthor());
-		assertEquals(ISBN_2, resourceRetrieved2.getIsbn());
-		assertEquals(DATE_2, resourceRetrieved2.getDate());
+	public void checkAdding() {
+		Set<Resource> resources = resourceManager.getAllResources();
+		for (Resource s : resources) {
+			if (s.getIsbn() == ISBN_1) {
+				assertEquals(NAME_1, s.getName());
+				assertEquals(AUTHOR_1, s.getAuthor());
+				assertEquals(ISBN_1, s.getIsbn());
+				assertEquals(DATE_1, s.getDate());
+			} else if (s.getIsbn() == ISBN_2) {
+				assertEquals(NAME_2, s.getName());
+				assertEquals(AUTHOR_2, s.getAuthor());
+				assertEquals(ISBN_2, s.getIsbn());
+				assertEquals(DATE_2, s.getDate());
+			}
+		}
 	}
 	
 	@Test
@@ -82,14 +83,16 @@ public class ResourceManagerTest {
 		assertEquals(0, resourceManager.countRows(archive3));
 		assertEquals(1, resourceManager.addResourceToArchive(resource3, archive3));
 		assertEquals(1, resourceManager.countRows(archive3));
-		List<Resource> resources2 = resourceManager.getAllResources();
-		Resource resourceRetrieved1 = resources2.get(2);
-		assertEquals(NAME_3, resourceRetrieved1.getName());
-		assertEquals(AUTHOR_3, resourceRetrieved1.getAuthor());
-		assertEquals(ISBN_3, resourceRetrieved1.getIsbn());
-		assertEquals(DATE_3, resourceRetrieved1.getDate());
-		assertEquals(TEAMNUMBERARCHIVE_3, resourceRetrieved1.getTeamNumber());
-		
+		Set<Resource> resources2 = resourceManager.getAllResources();
+		for (Resource s : resources2) {
+			if (s.getIsbn() == ISBN_3) {
+				assertEquals(NAME_3, s.getName());
+				assertEquals(AUTHOR_3, s.getAuthor());
+				assertEquals(ISBN_3, s.getIsbn());
+				assertEquals(DATE_3, s.getDate());
+				assertEquals(TEAMNUMBERARCHIVE_3, s.getTeamNumber());
+			}
+		}
 	}
 	
 	@Test
@@ -101,13 +104,16 @@ public class ResourceManagerTest {
 		assertEquals(1, resourceManager.countRows(archive3));
 		assertEquals(1, resourceManager.deleteResourceFromArchive(resource3, archive3));
 		assertEquals(0, resourceManager.countRows(archive3));
-		List<Resource> resources2 = resourceManager.getAllResources();
-		Resource resourceRetrieved1 = resources2.get(2);
-		assertEquals(NAME_3, resourceRetrieved1.getName());
-		assertEquals(AUTHOR_3, resourceRetrieved1.getAuthor());
-		assertEquals(ISBN_3, resourceRetrieved1.getIsbn());
-		assertEquals(DATE_3, resourceRetrieved1.getDate());
-		assertEquals(0, resourceRetrieved1.getTeamNumber());
+		Set<Resource> resources2 = resourceManager.getAllResources();
+		for (Resource s : resources2) {
+			if (s.getIsbn() == ISBN_3) {
+				assertEquals(NAME_3, s.getName());
+				assertEquals(AUTHOR_3, s.getAuthor());
+				assertEquals(ISBN_3, s.getIsbn());
+				assertEquals(DATE_3, s.getDate());
+				assertEquals(0, s.getTeamNumber());
+			}
+		}
 		
 	}
 	

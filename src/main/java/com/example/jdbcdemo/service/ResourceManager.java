@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import com.example.jdbcdemo.domain.Archive;
 import com.example.jdbcdemo.domain.Resource;
@@ -114,8 +116,8 @@ public class ResourceManager {
 		return count;
 	}
 	
-	public List<Resource> getAllResources() {
-		List<Resource> resources = new ArrayList<Resource>();
+	public Set<Resource> getAllResources() {
+		Set<Resource> resources = new TreeSet<Resource>();
 		try {
 			ResultSet rs = getAllResourcesStmt.executeQuery();
 			while (rs.next()){
