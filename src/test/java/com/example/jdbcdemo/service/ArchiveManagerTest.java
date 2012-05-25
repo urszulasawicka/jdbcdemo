@@ -3,6 +3,7 @@ package com.example.jdbcdemo.service;
 import static org.junit.Assert.*;
 
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -40,49 +41,50 @@ public class ArchiveManagerTest {
 	}
 	
 	@Test
-	public void checkAdding(){
-		List<Archive> archives = archiveManager.getAllArchives();
-		Archive archiveRetrieved1 = archives.get(0);
-		Archive archiveRetrieved2 = archives.get(1);
-		
-		assertEquals(NAME_1, archiveRetrieved1.getName());
-		assertEquals(TEAMNUMBER_1, archiveRetrieved1.getTeamNumber());
-		assertEquals(PHONE_1, archiveRetrieved1.getPhone());
-		
-		assertEquals(NAME_2, archiveRetrieved2.getName());
-		assertEquals(TEAMNUMBER_2, archiveRetrieved2.getTeamNumber());
-		assertEquals(PHONE_2, archiveRetrieved2.getPhone());
+	public void checkAdding() {
+		Set<Archive> archives = archiveManager.getAllArchives();
+		for (Archive a : archives) {
+			if (a.getTeamNumber() == TEAMNUMBER_1) {
+				assertEquals(NAME_1, a.getName());
+				assertEquals(TEAMNUMBER_1, a.getTeamNumber());
+				assertEquals(PHONE_1, a.getPhone());
+			} else if (a.getTeamNumber() == TEAMNUMBER_2) {
+				assertEquals(NAME_2, a.getName());
+				assertEquals(TEAMNUMBER_2, a.getTeamNumber());
+				assertEquals(PHONE_2, a.getPhone());
+			}
+		}
 	}
 	
 	@Test
 	public void checkReading(){
-		
-		List<Archive> archives = archiveManager.getAllArchives();
+		Set<Archive> archives = archiveManager.getAllArchives();
 		assertEquals(2, archives.size());
-		
-		Archive archiveRetrieved1 = archives.get(0);
-		Archive archiveRetrieved2 = archives.get(1);
-		
-		assertEquals(NAME_1, archiveRetrieved1.getName());
-		assertEquals(TEAMNUMBER_1, archiveRetrieved1.getTeamNumber());
-		assertEquals(PHONE_1, archiveRetrieved1.getPhone());
-		
-		assertEquals(NAME_2, archiveRetrieved2.getName());
-		assertEquals(TEAMNUMBER_2, archiveRetrieved2.getTeamNumber());
-		assertEquals(PHONE_2, archiveRetrieved2.getPhone());
+		for (Archive a : archives) {
+			if (a.getTeamNumber() == TEAMNUMBER_1) {
+				assertEquals(NAME_1, a.getName());
+				assertEquals(TEAMNUMBER_1, a.getTeamNumber());
+				assertEquals(PHONE_1, a.getPhone());
+			} else if (a.getTeamNumber() == TEAMNUMBER_2) {
+				assertEquals(NAME_2, a.getName());
+				assertEquals(TEAMNUMBER_2, a.getTeamNumber());
+				assertEquals(PHONE_2, a.getPhone());
+			}
+		}
 	}
 
 	@Test
 	public void checkUpdating(){
 		Archive archive3 = new Archive(NAME_3, TEAMNUMBER_2, PHONE_3);
 		assertEquals(1, archiveManager.updateArchive(archive3));
-		List<Archive> archives = archiveManager.getAllArchives();
-		
-		Archive archiveRetrieved = archives.get(1);
-		
-		assertEquals(NAME_3, archiveRetrieved.getName());
-		assertEquals(TEAMNUMBER_2, archiveRetrieved.getTeamNumber());
-		assertEquals(PHONE_3, archiveRetrieved.getPhone());
+		Set<Archive> archives = archiveManager.getAllArchives();
+		for (Archive a : archives) {
+			if (a.getTeamNumber() == TEAMNUMBER_2) {
+				assertEquals(NAME_3, a.getName());
+				assertEquals(TEAMNUMBER_2, a.getTeamNumber());
+				assertEquals(PHONE_3, a.getPhone());
+			}
+		}
 	}
 
 	@Test
@@ -90,7 +92,7 @@ public class ArchiveManagerTest {
 		Archive archive3 = new Archive(NAME_1, TEAMNUMBER_1, PHONE_1);
 		assertEquals(1, archiveManager.deleteArchive(archive3));
 		
-		List<Archive> archives = archiveManager.getAllArchives();
+		Set<Archive> archives = archiveManager.getAllArchives();
 		
 		assertEquals(1, archives.size());
 	}
@@ -100,14 +102,14 @@ public class ArchiveManagerTest {
 		Archive archive3 = new Archive(NAME_1, TEAMNUMBER_1, PHONE_1);
 		
 		assertEquals(1, archiveManager.searchArchive(archive3));
-		
-		List<Archive> archives = archiveManager.getAllArchives();
-		
-		Archive archiveRetrieved = archives.get(0);
-		
-		assertEquals(NAME_1, archiveRetrieved.getName());
-		assertEquals(TEAMNUMBER_1, archiveRetrieved.getTeamNumber());
-		assertEquals(PHONE_1, archiveRetrieved.getPhone());
+		Set<Archive> archives = archiveManager.getAllArchives();
+		for (Archive a : archives) {
+			if (a.getTeamNumber() == TEAMNUMBER_1) {
+				assertEquals(NAME_1, a.getName());
+				assertEquals(TEAMNUMBER_1, a.getTeamNumber());
+				assertEquals(PHONE_1, a.getPhone());
+			}
+		}
 	}
 
 }

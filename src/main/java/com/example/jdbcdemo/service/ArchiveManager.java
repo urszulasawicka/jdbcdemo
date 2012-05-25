@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import com.example.jdbcdemo.domain.Archive;
 
@@ -95,8 +97,9 @@ public class ArchiveManager {
 
 	}
 
-	public List<Archive> getAllArchives() {
-		List<Archive> archives = new ArrayList<Archive>();
+	public Set<Archive> getAllArchives() {
+		 Set<Archive> archives =new TreeSet<Archive>();
+		//List<Archive> archives = new ArrayList<Archive>();
 		try {
 			ResultSet rs = getAllArchivesStmt.executeQuery();
 			while (rs.next()) {

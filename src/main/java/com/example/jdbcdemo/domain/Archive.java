@@ -1,6 +1,6 @@
 package com.example.jdbcdemo.domain;
 
-public class Archive {
+public class Archive implements Comparable<Archive>{
 	
 	private long id;
 	private String name;
@@ -47,5 +47,15 @@ public class Archive {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-
+	
+	public int compareTo(Archive compareArchive) {
+		 
+		int compareTeamNumber = ((Archive) compareArchive).getTeamNumber(); 
+		//ascending order
+		return this.teamNumber - compareTeamNumber;
+ 
+		//descending order
+		//return compareQuantity - this.quantity;
+ 
+	}	
 }
